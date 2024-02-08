@@ -1,5 +1,7 @@
+
 export function addAdviceOnState(item) {
-    return { type:'ADD_ADVICE', payload: item };
+        return { type: 'ADD_ADVICE', payload: item };
+
 }
 export function addAdvice() {
     return async (dispatch) => {

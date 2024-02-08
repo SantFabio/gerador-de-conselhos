@@ -3,17 +3,23 @@ import iconDice from "../assets/svg/icon-dice.svg"
 import { addAdvice } from "./actions/adviceAction"
 import { useEffect } from "react";
 
-function AdviceComponent() {
-    const state = useSelector(state =>  state );
+function AdviceComponent({ opacityState, setOpacityState }) {
+    const state = useSelector(state => state);
     const dispatch = useDispatch();
-    useEffect(()=>{
-        console.log(state);
-    })
+
+    useEffect(() => {
+        setOpacityState(1);
+    }, [state])
+
+    useEffect(() => {
+        setOpacityState(0);
+        dispatch(addAdvice());
+    }, [])
     return (
         <>
             <div className="container">
-                <span className="advanceNumber">ADVANCE #{state.id}</span>
-                <p className="text">{state.advice}</p>
+                <span className="advanceNumber" style={{ opacity: opacityState }} >ADVANCE #{state ? state.id : ""}</span>
+                <p className="text" style={{ opacity: opacityState }} >{state ? state.advice : ''}</p>
                 <div className="pattern-divider">
                     <hr />
                     <div className="rectangleGroup">
@@ -22,7 +28,7 @@ function AdviceComponent() {
                     </div>
                     <hr />
                 </div>
-                <div className="dice" onClick={() => { dispatch(addAdvice())}}>
+                <div className="dice" style={{ opacity: opacityState }} onClick={() => { dispatch(addAdvice()); setOpacityState(0); }}>
                     <img src={iconDice} alt="Icone de dado" />
                 </div>
             </div>
@@ -30,4 +36,3 @@ function AdviceComponent() {
     )
 }
 export default AdviceComponent;
-// {id: 195, advice: 'Exercise in the rain can really make you feel alive.'}
